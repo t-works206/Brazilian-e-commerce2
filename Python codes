@@ -1,0 +1,45 @@
+import pandas as pd (common for each file)
+
+df = pd.read_csv('C:/Users/Tarun/OneDrive/Documents/Brazilian e-commerce/olist_orders_dataset.csv')
+df.head() (common logic for each file)
+
+df.drop_duplicates() (common)
+
+cols = [
+    'order_purchase_timestamp',
+    'order_approved_at',
+    'order_delivered_carrier_date',
+    'order_delivered_customer_date',
+    'order_estimated_delivery_date'
+]
+
+for col in cols:
+    df[col] = pd.to_datetime(df[col])
+
+
+
+df['order_status'].value_counts()
+
+
+
+df.groupby('order_status').agg({
+    'order_approved_at': lambda x: x.isnull().sum(),
+    'order_delivered_carrier_date': lambda x: x.isnull().sum(),
+    'order_delivered_customer_date': lambda x: x.isnull().sum()
+})
+(common)
+
+
+approved_issue = 14 / 96478 * 100
+carrier_issue = 2 / 96478 * 100
+delivery_issue = 8 / 96478 * 100
+
+approved_issue, carrier_issue, delivery_issue
+
+
+
+for col in df.select_dtypes(include='object').columns:
+    df[col] = df[col].str.strip()   (common)
+
+
+
